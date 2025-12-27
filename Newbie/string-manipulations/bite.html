@@ -1,0 +1,183 @@
+<p class="text-sm italic text-gray-700 dark:text-white mb-4">
+              Level: Newbie
+            </p>
+<p class="text-gray-700"></p><p>In this Bite, you'll learn more about manipulating strings in Python. String manipulation is a fundamental skill in programming, allowing you to process and transform text data effectively.</p><p></p>
+<a class="inline-block bg-blue-500 text-white px-4 py-2 rounded shadow hover:bg-blue-600 transition duration-300" href="#" onclick='standardModal(`&lt;iframe width="768" height="418" src="https://www.youtube.com/embed/oUiJdH8c6pM" referrerpolicy="strict-origin-when-cross-origin" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen&gt;&lt;/iframe&gt;`, 768, 418)' style="color: white;" title="Watch the related YouTube screencast">
+                  Watch YouTube Screencast
+                </a>
+<hr class="my-4 dark:border-gray-900"/>
+<p class="text-gray-700"></p><h3>String Manipulations</h3>
+<p>We have talked about string methods before, but in this bite we are taking it to the next level. Let's break down some common manipulations programmers perform, the strings methods required to do so, and explain why and when you would want to do so.</p>
+<p>Before we jump into examples, it is important to know that strings in Python are immutable. In this context, "immutable" means that once an object has been made and stored in memory by Python, you cannot change it programmatically. As a result, every time you call a string method, a new string is created.</p>
+<h3>Converting to lowercase</h3>
+<p>We have talked about the <code>.lower</code> method before, so let's use it to explore the idea of immutability.</p>
+<pre>text = "Learning Python is fun and engaging!"
+lowercase_text = text.lower()
+print(text) 
+print(lowercase_text)</pre>
+<p>Output:</p>
+<pre>Learning Python is fun and engaging!
+learning python is fun and engaging!</pre>
+<p>We first created an object labeled <code>text</code> that has the value <code>"Learning Python is fun and engaging!"</code>. Then, we called the <code>.lower</code> method. This returns a new copy of <code>text</code> with all lowercase letters, and assigns the lowercased version to the label <code>lowercase_text</code>. We still have access to the original <code>text</code> object.</p>
+<p>If we don't need the original string, we can reuse the label <code>text</code>. That code would look like this:</p>
+<pre>text = "Learning Python is fun and engaging!"
+text = text.lower()
+print(text)</pre>
+<p>Output:</p>
+<pre>learning python is fun and engaging!
+</pre>
+<p>The original string <code>"Learning Python is fun and engaging!"</code> still exists in memory; However, there is no label associated with it anymore because we reassigned the label <code>text</code> to the lowercased version.</p>
+<h4>Why?</h4>
+<p>Now, the question is, why would you want a string with only lowercase letters? Well, consider the following code:</p>
+<pre>confirm = input("Do you want to continue?")
+if confirm == "yes":
+    print("Let's move on")
+else:
+    print("OK, quitting now.")</pre>
+<p>This code asks the user to enter some text and stores it with the label <code>confirm</code>. If the value of <code>confirm</code> is equal to <code>"yes"</code>, the program moves on. Otherwise, the program quits.</p>
+<p>What happens is the user types in <code>Yes</code>? In Python, the string <code>"yes"</code> and the string <code>"Yes"</code> are not equivalent, so the code will display <code>OK, quitting now.</code> even though the user wanted to continue.</p>
+<p>One way to address this issue is to use the <code>.lower</code> method to convert the value of <code>confirm</code> to all lowercase no matter what the user types in.</p>
+<p>You have two options on where to call <code>.lower</code>. Read through the two examples below: What is the same? What is different?</p>
+<p><strong>Option 1</strong></p>
+<pre>confirm = input("Do you want to continue?")
+if confirm.lower() == "yes":
+    print("Let's move on")
+else:
+    print("OK, quitting now.")</pre>
+<p><strong>Option 2</strong></p>
+<pre>confirm = input("Do you want to continue?").lower()
+if confirm == "yes":
+    print("Let's move on")
+else:
+    print("OK, quitting now.")</pre>
+<p>In the first option, <code>.lower</code> is called during the <code>if</code> statement. In the second option, <code>.lower</code> is called on the return value from <code>input</code>. Since <code>input</code> always returns a string, you can call string methods directly. Generally, I prefer option 2, but it is up to you.</p>
+<h3>Removing punctuation</h3>
+<p>Let's move on to a new method: <code>.strip</code>. Can you guess what <code>.strip</code> does just by its name? It strips off characters from the beginning and end of strings. To use it, call <code>.strip</code> and place the characters you want to remove inside the parentheses. In the following example, we want to strip off the <code>"x"</code> characters from the beginning and end of the string.</p>
+<pre>text = "xxxxhelloxxxx"
+stripped_text = text.strip("x")
+print(stripped_text)</pre>
+<p>Output:</p>
+<pre>hello</pre>
+<p>It doesn't matter how many of them there are. But, it does matter that they are at the beginning and end of the string. Look closely at the following example.</p>
+<pre>text = "xxxxhelloxxxx!"
+stripped_text = text.strip("x")
+print(stripped_text)</pre>
+<p>Output:</p>
+<pre>helloxxxx!
+</pre>
+<p>That <code>"!"</code> at the end of the string caused only the <code>"x"</code> characters at the beginning to be stripped. If you want, you can add multiple characters inside the parentheses to remove both.</p>
+<pre>text = "xxxxhelloxxxx!"
+stripped_text = text.strip("!x")
+print(stripped_text)</pre>
+<p>Output:</p>
+<pre>hello</pre>
+<p>In addition to <code>.strip</code>, there are two other similar methods: <code>.lstrip</code> and <code>.rstrip</code>. Look at the examples below. Can you figure out what is happening?</p>
+<p><strong><code>.lstrip</code> Example</strong></p>
+<pre>text = "xxxxhelloxxxx"
+stripped_text = text.lstrip("x")
+print(stripped_text)</pre>
+<p>Output:</p>
+<pre>helloxxxx</pre>
+<p><strong><code>.rstrip</code> Example</strong></p>
+<pre>text = "xxxxhelloxxxx"
+stripped_text = text.rstrip("x")
+print(stripped_text)</pre>
+<p>Output:</p>
+<pre>xxxxhello</pre>
+<p><code>.lstrip</code> is short for "left strip". So, it only strips characters from the left side, or the beginning, of the string. <code>.rstrip</code> is short for "right strip". So, it only strips characters from the right side, or the end, of the string.</p>
+<h4>Why?</h4>
+<p>Now, why would you want to use this? Remember our confirmation example from above? We already addressed the issue when a user types capitals, but what if you have a really excited user who types <code>"YES!"</code>. Even after converting to lowercase, the strings "yes" and "yes!" will not be equal. So let's add a line to deal with possible punctuation.</p>
+<pre>confirm = input("Do you want to continue?").lower()
+confirm = confirm.strip(".?!")
+if confirm == "yes":
+    print("Let's move on")
+else:
+    print("OK, quitting now.")</pre>
+<p>Very nice! Now our code can handle variability in both casing and punctuation.</p>
+<h3>Chaining</h3>
+<p>Since each string method returns a new copy of the string you can chain together multiple methods. Using our confirmation example still, read through this version.</p>
+<pre>confirm = input("Do you want to continue?").lower().strip(".?!")
+if confirm == "yes":
+    print("Let's move on")
+else:
+    print("OK, quitting now.")</pre>
+<p>We call this chaining because methods are called directly after each other like links in a chain. Chaining methods together is like reading a recipe from left to right. Step 1: Get the input from the user. Step 2: Lowercase it. Step 3: Strip away punctuation characters. The final result is what gets stored with the label <code>confirm</code>.</p>
+<p>Whenever you are working with methods that return a new copy of an object, you can use this type of chaining.</p>
+<h3>Extracting Specific Words</h3>
+<p>We learned about the <code>.split</code> method back in <a href="../../../../../bites/word-count/">Newbie 31</a>. Let's take it up a notch. This time, instead of splitting right away, let's strip off some punctuation first, and then get the individual words.</p>
+<pre>text = "Learning Python is fun and engaging!"
+words = text.rstrip("!").split()
+print(words)</pre>
+<p>Output:</p>
+<pre>['Learning', 'python', 'is', 'fun', 'and', 'engaging']
+</pre>
+<p>This is another example of chaining methods together. Did you notice that we used <code>.rstrip</code> since the only punctuation was at the end of the sentence. We could have also used <code>.strip</code> here. Now, we have all the words without any of the punctuation on that final word.</p>
+<h3>Why?</h3>
+<p>Why would you want to do this? Perhaps you are interested in the length of the individual words. Using list indexing we learned about in <a href="../../../../../bites/returning-items-by-list-index/">Newbie 10</a> and the <code>len</code> function we learned in <a href="../../../../../bites/word-count/">Newbie 31</a> we can extract individual words and calculate their lengths.</p>
+<pre>text = "Learning Python is fun and engaging!"
+words = text.rstrip("!").split()
+
+second_word = words[1]
+last_word = words[-1]
+print(f"{second_word} has {len(second_word)} letters.")
+print(f"{last_word} has {len(last_word)} letters.")</pre>
+<p>Output:</p>
+<pre>Python has 6 letters.
+engaging has 8 letters.</pre>
+<h3>Your Task</h3>
+<p>Your task is to create a function <code>extract_words</code> that performs string manipulations and returns a formatted string.</p>
+<h3>Steps to Complete</h3>
+<ol>
+<li><strong>Convert to Lowercase</strong>: Use the <code>.lower</code> method to convert the text to lowercase.</li>
+<li><strong>Remove Trailing Punctuation</strong>: Use the <code>.rstrip</code> method to remove any trailing ".", "!", or "?" from the text.</li>
+<li><strong>Split into Words</strong>: Use the <code>.split</code> method to split the text into individual words.</li>
+<li><strong>Extract and Concatenate Words</strong>: Extract the first and last words from the list and concatenate them with a hyphen.</li>
+</ol>
+<h3>Example Usage</h3>
+<pre>text = "Today it's a sunny day in LA!"
+print(extract_words(text))</pre>
+<p>Output:</p>
+<pre>today-la
+</pre>
+<p>By completing this task, you'll gain a better understanding of basic string manipulations in Python.</p>
+<p>Good luck, and happy coding!</p><p></p>
+<div class="mt-4">
+<a class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full tag" href="/bites/tag/slicing">slicing</a>
+<a class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full tag" href="/bites/tag/split">split</a>
+<a class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full tag" href="/bites/tag/newbie">newbie</a>
+<a class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full tag" href="/bites/tag/lists">lists</a>
+<a class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full tag" href="/bites/tag/string-manipulation">string manipulation</a>
+<a class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full tag" href="/bites/tag/strings">strings</a>
+<a class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full tag" href="/bites/tag/lowercase">lowercase</a>
+</div>
+<div class="mt-8">
+<hr class="dark:border-gray-900"/>
+<div class="bg-white dark:bg-gray-800 dark:text-white w-full h-auto py-8 flex items-center justify-left gap-2 flex-wrap">
+<!-- x -->
+<a class="p-2 rounded-lg flex items-center justify-center transition-all duration-500 text-gray-800 dark:text-gray-100 dark:bg-gray-300 border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 hover:border-gray-100 dark:hover:border-gray-500" href="https://twitter.com/intent/tweet?text=I've%20just%20completed%20%22String%20manipulations%22%20on%20%40pybites%20%F0%9F%90%8D%F0%9F%8E%89%20-%20https%3A%2F%2Fpybitesplatform.com%2Fbites%2Fstring-manipulations%2F" id="share-x" target="_blank">
+<svg fill="none" height="28" viewbox="0 0 72 72" width="28" xmlns="http://www.w3.org/2000/svg">
+<path d="M40.7568 32.1716L59.3704 11H54.9596L38.7974 29.383L25.8887 11H11L30.5205 38.7983L11 61H15.4111L32.4788 41.5869L46.1113 61H61L40.7557 32.1716H40.7568ZM34.7152 39.0433L32.7374 36.2752L17.0005 14.2492H23.7756L36.4755 32.0249L38.4533 34.7929L54.9617 57.8986H48.1865L34.7152 39.0443V39.0433Z" fill="#111827"></path>
+</svg></a>
+<!-- linkedin -->
+<a class="p-2 rounded-lg flex items-center justify-center transition-all duration-500 text-gray-800 dark:text-gray-100 dark:bg-gray-300 border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 hover:border-gray-100 dark:hover:border-gray-500" href="https://www.linkedin.com/feed/?shareActive=true&amp;text=I've%20just%20completed%20%22String%20manipulations%22%20on%20%40pybites%20%F0%9F%90%8D%F0%9F%8E%89%20-%20https%3A%2F%2Fpybitesplatform.com%2Fbites%2Fstring-manipulations%2F" id="share-linkedin" target="_blank">
+<svg fill="none" height="28" viewbox="0 0 72 72" width="28" xmlns="http://www.w3.org/2000/svg">
+<path d="M24.7612 55.999V28.3354H15.5433V55.999H24.7621H24.7612ZM20.1542 24.5591C23.3679 24.5591 25.3687 22.4348 25.3687 19.7801C25.3086 17.065 23.3679 15 20.2153 15C17.0605 15 15 17.065 15 19.7799C15 22.4346 17.0001 24.5588 20.0938 24.5588H20.1534L20.1542 24.5591ZM29.8633 55.999H39.0805V40.5521C39.0805 39.7264 39.1406 38.8985 39.3841 38.3088C40.0502 36.6562 41.5668 34.9455 44.1138 34.9455C47.4484 34.9455 48.7831 37.4821 48.7831 41.2014V55.999H58V40.1376C58 31.6408 53.4532 27.6869 47.3887 27.6869C42.4167 27.6869 40.233 30.4589 39.0198 32.347H39.0812V28.3364H29.8638C29.9841 30.9316 29.8631 56 29.8631 56L29.8633 55.999Z" fill="#111827"></path>
+</svg></a>
+<!-- email -->
+<a class="p-2 rounded-lg flex items-center justify-center transition-all duration-500 text-gray-800 dark:text-gray-100 dark:bg-gray-300 border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 hover:border-gray-100 dark:hover:border-gray-500" href="mailto:?subject=String%20manipulations&amp;body=I've%20just%20completed%20%22String%20manipulations%22%20on%20%40pybites%20%F0%9F%90%8D%F0%9F%8E%89%20-%20https%3A%2F%2Fpybitesplatform.com%2Fbites%2Fstring-manipulations%2F" id="share-email">
+<svg fill="none" height="28" viewbox="0 0 72 72" width="28" xmlns="http://www.w3.org/2000/svg">
+<path d="M11.9362 56.1235H20.4189V35.5227L8.30078 26.434V52.4881C8.30078 54.4997 9.93067 56.1235 11.9362 56.1235Z" fill="#111827"></path>
+<path d="M49.5025 56.1235H57.9853C59.9969 56.1235 61.6207 54.4936 61.6207 52.4881V26.434L49.5025 35.5227" fill="#111827"></path>
+<path d="M49.5025 19.7693V35.5227L61.6207 26.434V21.587C61.6207 17.0912 56.4887 14.5282 52.8956 17.2245" fill="#111827"></path>
+<path d="M20.4189 35.5227V19.769L34.9607 30.6754L49.5025 19.7693V35.5227L34.9607 46.429" fill="#111827"></path>
+<path d="M8.30078 21.587V26.434L20.4189 35.5227V19.769L17.0259 17.2245C13.4268 14.5282 8.30078 17.0912 8.30078 21.587Z" fill="#111827"></path>
+</svg></a>
+<!-- whatsapp -->
+<a class="p-2 rounded-lg flex items-center justify-center transition-all duration-500 text-gray-800 dark:text-gray-100 dark:bg-gray-300 border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 hover:border-gray-100 dark:hover:border-gray-500" href="https://api.whatsapp.com/send?text=I've%20just%20completed%20%22String%20manipulations%22%20on%20%40pybites%20%F0%9F%90%8D%F0%9F%8E%89%20-%20https%3A%2F%2Fpybitesplatform.com%2Fbites%2Fstring-manipulations%2F" id="share-whatsapp" target="_blank">
+<svg fill="none" height="28" viewbox="0 0 71 72" width="28" xmlns="http://www.w3.org/2000/svg">
+<path d="M12.5068 56.8405L15.7915 44.6381C13.1425 39.8847 12.3009 34.3378 13.4211 29.0154C14.5413 23.693 17.5482 18.952 21.89 15.6624C26.2319 12.3729 31.6173 10.7554 37.0583 11.1068C42.4992 11.4582 47.6306 13.755 51.5108 17.5756C55.3911 21.3962 57.7599 26.4844 58.1826 31.9065C58.6053 37.3286 57.0535 42.7208 53.812 47.0938C50.5705 51.4668 45.8568 54.5271 40.5357 55.7133C35.2146 56.8994 29.6432 56.1318 24.8438 53.5513L12.5068 56.8405ZM25.4386 48.985L26.2016 49.4365C29.6779 51.4918 33.7382 52.3423 37.7498 51.8555C41.7613 51.3687 45.4987 49.5719 48.3796 46.7452C51.2605 43.9185 53.123 40.2206 53.6769 36.2279C54.2308 32.2351 53.445 28.1717 51.4419 24.6709C49.4388 21.1701 46.331 18.4285 42.6027 16.8734C38.8745 15.3184 34.7352 15.0372 30.8299 16.0736C26.9247 17.11 23.4729 19.4059 21.0124 22.6035C18.5519 25.801 17.2209 29.7206 17.2269 33.7514C17.2237 37.0937 18.1503 40.3712 19.9038 43.2192L20.3823 44.0061L18.546 50.8167L25.4386 48.985Z" fill="#111827"></path>
+<path clip-rule="evenodd" d="M43.9566 36.8847C43.5093 36.5249 42.9856 36.2716 42.4254 36.1442C41.8651 36.0168 41.2831 36.0186 40.7236 36.1495C39.8831 36.4977 39.3399 37.8134 38.7968 38.4713C38.6823 38.629 38.514 38.7396 38.3235 38.7823C38.133 38.8251 37.9335 38.797 37.7623 38.7034C34.6849 37.5012 32.1055 35.2965 30.4429 32.4475C30.3011 32.2697 30.2339 32.044 30.2557 31.8178C30.2774 31.5916 30.3862 31.3827 30.5593 31.235C31.165 30.6368 31.6098 29.8959 31.8524 29.0809C31.9063 28.1818 31.6998 27.2863 31.2576 26.5011C30.9157 25.4002 30.265 24.42 29.3825 23.6762C28.9273 23.472 28.4225 23.4036 27.9292 23.4791C27.4359 23.5546 26.975 23.7709 26.6021 24.1019C25.9548 24.6589 25.4411 25.3537 25.0987 26.135C24.7562 26.9163 24.5939 27.7643 24.6236 28.6165C24.6256 29.0951 24.6864 29.5716 24.8046 30.0354C25.1049 31.1497 25.5667 32.2144 26.1754 33.1956C26.6145 33.9473 27.0937 34.6749 27.6108 35.3755C29.2914 37.6767 31.4038 39.6305 33.831 41.1284C35.049 41.8897 36.3507 42.5086 37.7105 42.973C39.1231 43.6117 40.6827 43.8568 42.2237 43.6824C43.1018 43.5499 43.9337 43.2041 44.6462 42.6755C45.3588 42.1469 45.9302 41.4518 46.3102 40.6512C46.5334 40.1675 46.6012 39.6269 46.5042 39.1033C46.2714 38.0327 44.836 37.4007 43.9566 36.8847Z" fill="#111827" fill-rule="evenodd"></path>
+</svg></a>
+</div>
+</div>
+</div>
